@@ -152,7 +152,7 @@ public class Calculator extends AppCompatActivity {
                 compute();
                 ACTION = EQU;
                 result.setText(result.getText().toString() + String.valueOf(vall2) + "=" + String.valueOf(vall));
-         
+
                 info.setText(null);
 
             }
