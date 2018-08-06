@@ -27,7 +27,7 @@
             android:authorities="com.example.plainolnotes.notesprovider"
             android:exported="false" />
 
-        <activity android:name=".activity_editor"></activity>
+        <activity android:name=".activity_editor" />
     </application>
 
 </manifest>

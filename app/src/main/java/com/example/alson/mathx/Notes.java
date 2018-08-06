@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -44,6 +45,13 @@ implements LoaderManager.LoaderCallbacks<Cursor>
         Uri noteUri = getContentResolver().insert(NotesProvider.CONTENT_URI,values);
 
         Log.d("Notes", "Inserted Notes" + noteUri.getLastPathSegment());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
