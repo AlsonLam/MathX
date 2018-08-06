@@ -34,8 +34,8 @@ implements LoaderManager.LoaderCallbacks<Cursor>
         ListView list = findViewById(android.R.id.list);
         list.setAdapter(cursorAdapter);
 
-        getLoaderManager().initLoader(0, null, this);
-        
+
+
 
     }
 
@@ -56,11 +56,27 @@ implements LoaderManager.LoaderCallbacks<Cursor>
                 insertSampleData();
                 break;
             case R.id.action_delete_all:
+                deleteAllNotes();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void deleteAllNotes() {
+    }
+
+    private void insertSampleData(){
+        insertNote("Simple note");
+        insertNote("Multi-line\nnote");
+        insertNote("Very long note with a lot of text that exceeds the width of the screen");
+        restartLoader();
+    }
+
+    private void restartLoader (){
+        getLoaderManager().restartLoader(0,null, this);
+    }
+   
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
