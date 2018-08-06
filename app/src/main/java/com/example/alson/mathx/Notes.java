@@ -51,6 +51,14 @@ implements LoaderManager.LoaderCallbacks<Cursor>
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
 
+        switch (id) {
+            case R.id.action_create_sample:
+                insertSampleData();
+                break;
+            case R.id.action_delete_all:
+                break;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
