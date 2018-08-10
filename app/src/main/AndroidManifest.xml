@@ -28,6 +28,14 @@
             android:exported="false" />
 
         <activity android:name=".activity_editor" />
+        <activity
+            android:name=".Editoractivity"
+            android:label="@string/title_activity_editoractivity"
+            android:parentActivityName=".Notes">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.alson.mathx.Notes" />
+        </activity>
     </application>
 
 </manifest>
