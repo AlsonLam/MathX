@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Notes">
@@ -11,16 +12,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="122dp"
-        android:layout_height="60dp"
+    <at.markushi.ui.CircleButton
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        app:cb_color="@color/primary"
+        app:cb_pressedRingWidth="8dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="21dp"
-        android:layout_marginEnd="15dp"
-        android:text="New Note"
-        android:onClick="openEditorForNewNote"/>
+        android:layout_alignParentRight="true"
+        android:onClick="openEditorForNewNote"
+        android:src="@drawable/ic_action_add"/>
+
+    <!--<Button-->
+        <!--android:id="@+id/button2"-->
+        <!--android:layout_width="122dp"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:onClick="openEditorForNewNote"-->
+        <!--android:layout_marginBottom="21dp"-->
+        <!--android:layout_marginEnd="15dp"-->
+        <!--android:text="New Note" />-->
 
 
 </RelativeLayout>

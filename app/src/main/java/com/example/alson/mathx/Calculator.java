@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import org.mariuszgromada.math.mxparser.*;
 
 public class Calculator extends AppCompatActivity {
-
     private Button zero;
     private Button one;
     private Button two;
@@ -34,10 +34,11 @@ public class Calculator extends AppCompatActivity {
     private double vall = Double.NaN;
     private double vall2;
     private char ACTION;
-
-
-
-
+    public String equation = "";
+    public String pastequation = "";
+    public String pastans = "";
+    public Boolean answered = false;
+    public Boolean firsttime = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,115 +46,186 @@ public class Calculator extends AppCompatActivity {
 
         setupUIViews();
 
+
+
         zero.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                info.setText(info.getText().toString() + "0");
+                if(answered == true) {
+                    equation = "";
+                    answered = false;
+                }
+
+                equation = equation + "0";
+                info.setText(equation);
+
             }
         });
         one.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                info.setText(info.getText().toString() + "1");
+                if(answered == true) {
+                    equation = "";
+                    answered = false;
+                }
+                equation = equation + "1";
+                info.setText(equation);
             }
         });
         two.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                info.setText(info.getText().toString() + "2");
+                if(answered == true) {
+                    equation = "";
+                    answered = false;
+                }
+                equation = equation + "2";
+                info.setText(equation);
             }
         });
         three.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                info.setText(info.getText().toString() + "3");
+                if(answered == true) {
+                    equation = "";
+                    answered = false;
+                }
+                equation = equation + "3";
+                info.setText(equation);
             }
         });
         four.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                info.setText(info.getText().toString() + "4");
+                if(answered == true) {
+                    equation = "";
+                    answered = false;
+                }
+                equation = equation + "4";
+                info.setText(equation);
             }
         });
         five.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                info.setText(info.getText().toString() + "5");
+                if(answered == true) {
+                    equation = "";
+                    answered = false;
+                }
+                equation = equation + "5";
+                info.setText(equation);
             }
         });
         six.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                info.setText(info.getText().toString() + "6");
+                if(answered == true) {
+                    equation = "";
+                    answered = false;
+                }
+                equation = equation + "6";
+                info.setText(equation);
             }
         });
         seven.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                info.setText(info.getText().toString() + "7");
+                if(answered == true) {
+                    equation = "";
+                    answered = false;
+                }
+                equation = equation + "7";
+                info.setText(equation);
             }
         });
         eight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                info.setText(info.getText().toString() + "8");
+                if(answered == true) {
+                    equation = "";
+                    answered = false;
+                }
+                equation = equation + "8";
+                info.setText(equation);
             }
         });
         nine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                info.setText(info.getText().toString() + "9");
+                if(answered == true) {
+                    equation = "";
+                    answered = false;
+                }
+                equation = equation + "9";
+                info.setText(equation);
             }
         });
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                compute();
-                ACTION = ADDITION;
-                result.setText(String.valueOf(vall) + "+");
-                info.setText(null);
-
+                equation = equation + "+";
+                info.setText(equation);
+                answered = false;
             }
         });
+
         sub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                compute();
-                ACTION = SUBTRACTION;
-                result.setText(String.valueOf(vall) + "-");
-                info.setText(null);
-
+                equation = equation + "-";
+                info.setText(equation);
+                answered = false;
             }
         });
         mul.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                compute();
-                ACTION = MULTIPLICATION;
-                result.setText(String.valueOf(vall) + "*");
-                info.setText(null);
-
+                equation = equation + "*";
+                info.setText(equation);
+                answered = false;
             }
         });
         div.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                compute();
-                ACTION = DIVISION;
-                result.setText(String.valueOf(vall) + "/");
-                info.setText(null);
-
+                equation = equation + "/";
+                info.setText(equation);
+                answered = false;
             }
         });
 
         equal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                compute();
-                ACTION = EQU;
-                result.setText(result.getText().toString() + String.valueOf(vall2) + "=" + String.valueOf(vall));
+                System.out.println(pastans);
+                equation = equation.replace("Ans",pastans);
+                equation = equation.replace("--","+");
+                String string1 = "+";
+                Integer initial = equation.length();
+                for (int y = 0; y <= equation.length(); y ++){
+                    System.out.println(y);
+                    string1 = "+";
+                    for(int x = 0;x <= initial-y+1;x ++){
+                        string1  = string1 + "+";
+                    }
+                    System.out.println(string1);
+                    equation = equation.replace(string1,"+");
+                }
+                equation = equation.replace("+-","-");
+                equation = equation.replace("-+","-");
+                Expression e = new Expression(equation);
+                mXparser.consolePrintln("Res: " + e.getExpressionString() + " = " + e.calculate());
+                mXparser.consolePrintln(e.checkSyntax());
+                if(e.checkSyntax() == true){
+                    info.setText("" + e.calculate());
+                    result.setText(e.getExpressionString() + " = " + e.calculate());
+                    equation = "Ans";
+                    pastans = "" + e.calculate();
+                    answered = true;
+                }else{
+                    info.setText("Syntax error");
 
-                info.setText(null);
+                }
 
             }
         });
@@ -161,20 +233,13 @@ public class Calculator extends AppCompatActivity {
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (info.getText().length() > 0) {
-                    CharSequence name = info.getText().toString();
-                    info.setText(name.subSequence(0, name.length()-1));
-                }
-                else{
-                    vall = Double.NaN;
-                    vall2 = Double.NaN;
-                    info.setText(null);
-                    result.setText(null);
-                }
+                equation = "";
+                info.setText("");
+                result.setText("");
             }
         });
-        }
-        private void setupUIViews(){
+    }
+    private void setupUIViews(){
         one = (Button) findViewById(R.id.btn1);
         zero = (Button) findViewById(R.id.btn0);
         two = (Button) findViewById(R.id.btn2);
@@ -194,34 +259,7 @@ public class Calculator extends AppCompatActivity {
         result = (TextView) findViewById(R.id.tvResult);
         clear = (Button) findViewById(R.id.btnclear);
 
-        }
-        private void compute(){
-            if(!Double.isNaN(vall)){
-                vall2 = Double.parseDouble(info.getText().toString());
-
-                switch(ACTION){
-                    case ADDITION:
-                        vall = vall+vall2;
-                        break;
-                    case SUBTRACTION:
-                        vall = vall - vall2;
-                        break;
-                    case MULTIPLICATION:
-                        vall = vall * vall2;
-                        break;
-                    case DIVISION:
-                        vall = vall / vall2;
-                        break;
-                    case EQU:
-                        break;
-
-                }
-
-            }
-            else{
-                vall = Double.parseDouble(info.getText().toString());
-            }
-
-        }
-
     }
+
+
+}
