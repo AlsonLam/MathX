@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import org.mariuszgromada.math.mxparser.*;
 
@@ -18,14 +19,19 @@ public class Calculator extends AppCompatActivity {
     private Button seven;
     private Button eight;
     private Button nine;
-    private Button add;
-    private Button sub;
-    private Button mul;
+    private ImageButton add;
+    private ImageButton sub;
+    private ImageButton mul;
     private Button div;
     private Button equal;
     private Button clear;
     private TextView info;
     private TextView result;
+    private Button openbrackets;
+    private Button closebrackets;
+    private Button decimal;
+    private Button sqroot;
+    private ImageButton delete;
     private final char ADDITION = '+';
     private final char SUBTRACTION = '-';
     private final char MULTIPLICATION = '*';
@@ -180,53 +186,159 @@ public class Calculator extends AppCompatActivity {
         mul.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                equation = equation + "*";
-                info.setText(equation);
-                answered = false;
+                if (equation.length() != 0) {
+                    equation = equation + "*";
+                    info.setText(equation);
+                    answered = false;
+                }
             }
         });
         div.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                equation = equation + "/";
+                if (equation.length() != 0) {
+                    equation = equation + "/";
+                    info.setText(equation);
+                    answered = false;
+                }
+            }
+        });
+        openbrackets.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(equation.length() == 0){
+                    equation = equation + "(";
+                    info.setText(equation);
+                    answered = false;
+                }else {
+                    try{
+                        Integer hi = Integer.parseInt(equation.substring(equation.length()-1));
+                        equation = equation + "*(";
+                        info.setText(equation);
+                        answered = false;
+                    }catch (NumberFormatException ex) {
+                        equation = equation + "(";
+                        info.setText(equation);
+                        answered = false;
+                    }
+
+                }
+            }
+        });
+        closebrackets.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                equation = equation + ")";
+                info.setText(equation);
+                answered = false;
+
+            }
+        });
+        decimal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (equation.length() != 0) {
+                    equation = equation + ".";
+                    info.setText(equation);
+                    answered = false;
+                }
+            }
+        });
+        decimal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                equation = equation + ".";
                 info.setText(equation);
                 answered = false;
             }
         });
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(answered ==true){
 
+                }else {
+                    equation = removeLastChar(equation);
+                    info.setText(equation);
+                }
+            }
+        });
+        sqroot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (equation.length() != 0) {
+                    System.out.println(pastans);
+                    equation = equation.replace("Ans", "(" + pastans + ")");
+                    equation = equation.replace("--", "+");
+                    String string1 = "+";
+                    Integer initial = equation.length();
+                    for (int y = 0; y <= equation.length(); y++) {
+                        System.out.println(y);
+                        string1 = "+";
+                        for (int x = 0; x <= initial - y + 1; x++) {
+                            string1 = string1 + "+";
+                        }
+                        System.out.println(string1);
+                        equation = equation.replace(string1, "+");
+                    }
+                    equation = equation.replace("+-", "-");
+                    equation = equation.replace("-+", "-");
+                    equation = equation.replace(")(", ")*(");
+                    equation = "sqrt(" + equation + ")";
+                    Expression e = new Expression(equation);
+                    mXparser.consolePrintln("Res: " + e.getExpressionString() + " = " + e.calculate());
+                    mXparser.consolePrintln(e.checkSyntax());
+                    if (e.checkSyntax() == true) {
+                        info.setText("" + e.calculate());
+                        result.setText(e.getExpressionString() + " = " + e.calculate());
+                        equation = "Ans";
+                        pastans = "" + e.calculate();
+                        answered = true;
+                    } else {
+                        info.setText("Syntax error");
+
+                    }
+
+                }
+            }
+        });
         equal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(pastans);
-                equation = equation.replace("Ans",pastans);
-                equation = equation.replace("--","+");
-                String string1 = "+";
-                Integer initial = equation.length();
-                for (int y = 0; y <= equation.length(); y ++){
-                    System.out.println(y);
-                    string1 = "+";
-                    for(int x = 0;x <= initial-y+1;x ++){
-                        string1  = string1 + "+";
+                if (equation.length() != 0) {
+                    System.out.println(pastans);
+                    equation = equation.replace("Ans", "(" + pastans + ")");
+                    equation = equation.replace("--", "+");
+                    String string1 = "+";
+                    Integer initial = equation.length();
+                    for (int y = 0; y <= equation.length() + 1; y++) {
+                        System.out.println(y);
+                        string1 = "+";
+                        for (int x = 0; x <= initial - y + 1; x++) {
+                            string1 = string1 + "+";
+                        }
+                        System.out.println(string1);
+                        equation = equation.replace(string1, "+");
                     }
-                    System.out.println(string1);
-                    equation = equation.replace(string1,"+");
-                }
-                equation = equation.replace("+-","-");
-                equation = equation.replace("-+","-");
-                Expression e = new Expression(equation);
-                mXparser.consolePrintln("Res: " + e.getExpressionString() + " = " + e.calculate());
-                mXparser.consolePrintln(e.checkSyntax());
-                if(e.checkSyntax() == true){
-                    info.setText("" + e.calculate());
-                    result.setText(e.getExpressionString() + " = " + e.calculate());
-                    equation = "Ans";
-                    pastans = "" + e.calculate();
-                    answered = true;
-                }else{
-                    info.setText("Syntax error");
+                    equation = equation.replace("+-", "-");
+                    equation = equation.replace("-+", "-");
+                    equation = equation.replace(")(", ")*(");
+                    Expression e = new Expression(equation);
+                    mXparser.consolePrintln("Res: " + e.getExpressionString() + " = " + e.calculate());
+                    mXparser.consolePrintln(e.checkSyntax());
+                    if (e.checkSyntax() == true) {
+                        info.setText("" + e.calculate());
+                        result.setText(e.getExpressionString() + " = " + e.calculate());
+                        equation = "Ans";
+                        pastans = "" + e.calculate();
+                        answered = true;
+                    } else {
+                        info.setText("Syntax error");
+
+                    }
 
                 }
-
             }
         });
 
@@ -250,16 +362,26 @@ public class Calculator extends AppCompatActivity {
         seven = (Button) findViewById(R.id.btn7);
         eight = (Button) findViewById(R.id.btn8);
         nine = (Button) findViewById(R.id.btn9);
-        add = (Button) findViewById(R.id.btnadd);
-        sub = (Button) findViewById(R.id.btnsub);
-        mul = (Button) findViewById(R.id.btnmul);
+        add = (ImageButton) findViewById(R.id.btnadd);
+        sub = (ImageButton) findViewById(R.id.btnsub);
+        mul = (ImageButton) findViewById(R.id.btnmul);
         div = (Button) findViewById(R.id.btndivide);
         equal = (Button) findViewById(R.id.btnequal);
         info = (TextView) findViewById(R.id.tvControl);
         result = (TextView) findViewById(R.id.tvResult);
         clear = (Button) findViewById(R.id.btnclear);
+        openbrackets = (Button) findViewById(R.id.butnopenbrackets);
+        closebrackets = (Button) findViewById(R.id.butnclosebrackets);
+        decimal = (Button) findViewById(R.id.butb);
+        delete =  (ImageButton) findViewById(R.id.butndelet);
+        sqroot =  (Button) findViewById(R.id.butnsquareroot);
 
     }
-
+    public String removeLastChar(String s) {
+        if (s == null || s.length() == 0) {
+            return s;
+        }
+        return s.substring(0, s.length()-1);
+    }
 
 }

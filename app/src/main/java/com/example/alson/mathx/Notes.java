@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
@@ -29,6 +30,7 @@ implements LoaderManager.LoaderCallbacks<Cursor>
 {
     private static final int EDITOR_REQUEST_CODE = 1001;
     private CursorAdapter cursorAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +41,17 @@ implements LoaderManager.LoaderCallbacks<Cursor>
         ListView list = findViewById(android.R.id.list);
         list.setAdapter(cursorAdapter);
 
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(Notes.this,Editoractivity.class);
+                Uri uri = Uri.parse(NotesProvider.CONTENT_URI + "/" + id);
+                intent.putExtra(NotesProvider.CONTENT_ITEM_TYPE, uri);
+                startActivityForResult(intent,EDITOR_REQUEST_CODE);
+            }
+        });
 
-
+        getLoaderManager().initLoader(0, null, this);
 
     }
 
@@ -131,5 +142,12 @@ implements LoaderManager.LoaderCallbacks<Cursor>
     public void openEditorForNewNote(View view) {
         Intent intent = new Intent(this, Editoractivity.class);
         startActivityForResult(intent, EDITOR_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == EDITOR_REQUEST_CODE && resultCode == RESULT_OK){
+            restartLoader();
+        }
     }
 }

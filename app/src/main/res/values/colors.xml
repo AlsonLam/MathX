@@ -4,4 +4,8 @@
     <color name="primary_dark">#1A237E</color>
     <color name="accent">#C5CAE9</color>
     <color name="list_item_text">#333</color>
+    <color name="oper_text_color">#1db7bd</color>
+    <color name="equl_text_color">#ffffff</color>
+    <color name="main_backg_color">#ffffff</color>
+    <color name="input_backg_color">#ffffff</color>
 </resources>

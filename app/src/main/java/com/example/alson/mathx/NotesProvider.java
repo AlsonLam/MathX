@@ -21,6 +21,7 @@ public class NotesProvider extends ContentProvider{
     private static final UriMatcher uriMatcher =
             new UriMatcher(UriMatcher.NO_MATCH);
 
+
     public static final String CONTENT_ITEM_TYPE = "Note";
 
     static {
@@ -41,6 +42,7 @@ public class NotesProvider extends ContentProvider{
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[]
             selectionArgs, String sortOrder) {
+
 
 
         if (uriMatcher.match(uri) == NOTES_ID) {
