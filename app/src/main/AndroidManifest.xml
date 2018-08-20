@@ -36,6 +36,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.alson.mathx.Notes" />
         </activity>
+        <activity android:name=".Secondary_Three" />
+        <activity android:name=".Secondary_Four"></activity>
     </application>
 
 </manifest>
